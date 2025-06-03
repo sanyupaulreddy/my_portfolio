@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkportfolio=self.webpackChunkportfolio||[]).push([[850],{850:(e,s,i)=>{i.r(s),i.d(s,{default:()=>d});i(43);var c=i(579);const d=()=>(0,c.jsxs)("section",{className:"resume-section",children:[(0,c.jsx)("h2",{children:"My Resume"}),(0,c.jsxs)("div",{className:"pdf-preview",children:[(0,c.jsx)("h3",{children:"Resume Preview"}),(0,c.jsx)("embed",{src:"/assets/resume.pdf",type:"application/pdf",width:"100%",height:"500px",className:"pdf-embed"})]})]})}}]);
+//# sourceMappingURL=850.3d266d4c.chunk.js.map
