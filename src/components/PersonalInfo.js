@@ -3,7 +3,10 @@ import React from 'react';
 const PersonalInfo = () => (
   <div className="personal-info-card">
     <div className="info-content">
-      <h1>Sanyu Paul Reddy Singareddy</h1>
+      {/* 🔥 Animated masked text for name */}
+      <h1 className="neon-text">SANYU PAUL REDDY SINGAREDDY</h1>
+
+
       <div className="contact-item">
         <img src={`${process.env.PUBLIC_URL}/assets/gmail_logo.png`} alt="Gmail" />
         <a href="mailto:sanyu.p.singareddy@gmail.com">sanyu.p.singareddy@gmail.com</a>
@@ -32,7 +35,7 @@ const PersonalInfo = () => (
       </p>
     </div>
     <div className="profile-image">
-      <img src={`${process.env.PUBLIC_URL}/assets/profile.jpg`} alt="Profile" />
+      <img src={`${process.env.PUBLIC_URL}/assets/Profile.png`} alt="Profile" />
     </div>
   </div>
 );

@@ -1,11 +1,10 @@
 import React, { Suspense, lazy, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ThemeProvider, ThemeContext } from './ThemeContext';
 import Sidebar from './components/Sidebar';
 import './App.css';
 
-// Lazy-loaded components
 const PersonalInfo = lazy(() => import('./components/PersonalInfo'));
 const Education = lazy(() => import('./components/Education'));
 const Skills = lazy(() => import('./components/Skills'));
@@ -14,7 +13,6 @@ const Certifications = lazy(() => import('./components/Certifications'));
 const Interests = lazy(() => import('./components/Interests'));
 const Resume = lazy(() => import('./components/Resume'));
 
-// Main content wrapper with conditional background overlays
 const MainContent = ({ children }) => {
   const { theme } = useContext(ThemeContext);
 
@@ -31,16 +29,31 @@ const MainContent = ({ children }) => {
       )}
 
       {/* Fireflies in Dark Mode */}
-      {theme === 'dark' &&
-        [...Array(15)].map((_, i) => (
-          <div key={i} className="firefly" />
-        ))}
+      {theme === 'dark' && (
+  <div className="lines">
+    {[...Array(10)].map((_, i) => (
+      <div key={i} className="line"></div>
+    ))}
+  </div>
+)}
 
-      {/* Routed Pages */}
       {children}
     </main>
   );
 };
+
+function HomePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <section id="personal-info"><PersonalInfo /></section>
+      <section id="education"><Education /></section>
+      <section id="skills"><Skills /></section>
+      <section id="projects"><Projects /></section>
+      <section id="certifications"><Certifications /></section>
+      <section id="interests"><Interests /></section>
+    </Suspense>
+  );
+}
 
 function App() {
   return (
@@ -57,17 +70,10 @@ function App() {
           <Sidebar />
 
           <MainContent>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Routes>
-                <Route path="/" element={<PersonalInfo />} />
-                <Route path="/education" element={<Education />} />
-                <Route path="/skills" element={<Skills />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/certifications" element={<Certifications />} />
-                <Route path="/interests" element={<Interests />} />
-                <Route path="/resume" element={<Resume />} />
-              </Routes>
-            </Suspense>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/resume" element={<Resume />} />
+            </Routes>
           </MainContent>
 
         </div>

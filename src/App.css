@@ -41,32 +41,72 @@ html, body {
   top: 0;
   z-index: -1;
 }
-[data-theme="light"] .bg2 {
-  animation-direction: alternate-reverse;
-  animation-duration: 4s;
-}
-[data-theme="light"] .bg3 {
-  animation-duration: 5s;
-}
+[data-theme="light"] .bg2 { animation-direction: alternate-reverse; animation-duration: 4s; }
+[data-theme="light"] .bg3 { animation-duration: 5s; }
+
 @keyframes slide {
   0% { transform: translateX(-25%); }
   100% { transform: translateX(25%); }
 }
 
+/* 🌑 Dark Mode Background with Falling Lines */
 [data-theme="dark"] .main-content {
-  background: url('https://i.pinimg.com/originals/44/6e/3b/446e3b79395a287ca32f7977dd83b290.jpg') no-repeat center center/cover;
   position: relative;
-}
-[data-theme="dark"] .main-content::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  pointer-events: none;
+  background: #111;
+  overflow: hidden;
 }
 
-/* Multiple fireflies for dark mode */
+[data-theme="dark"] .lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  margin: auto;
+  width: 90vw;
+  display: flex;
+  justify-content: space-between;
+  z-index: 0;
+}
+
+[data-theme="dark"] .line {
+  position: relative;
+  width: 1px;
+  height: 100%;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .line::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 15vh;
+  width: 100%;
+  top: -50%;
+  left: 0;
+  animation: drop 7s infinite;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+}
+
+/* 🎨 Different neon colors per line */
+[data-theme="dark"] .line:nth-child(1)::after { background: linear-gradient(to bottom, transparent 0%, #FF4500 75%, #FF4500 100%); animation-delay: 0.5s; }
+[data-theme="dark"] .line:nth-child(2)::after { background: linear-gradient(to bottom, transparent 0%, #32CD32 75%, #32CD32 100%); animation-delay: 1s; }
+[data-theme="dark"] .line:nth-child(3)::after { background: linear-gradient(to bottom, transparent 0%, #1E90FF 75%, #1E90FF 100%); animation-delay: 1.5s; }
+[data-theme="dark"] .line:nth-child(4)::after { background: linear-gradient(to bottom, transparent 0%, #FFD700 75%, #FFD700 100%); animation-delay: 2s; }
+[data-theme="dark"] .line:nth-child(5)::after { background: linear-gradient(to bottom, transparent 0%, #8A2BE2 75%, #8A2BE2 100%); animation-delay: 2.5s; }
+[data-theme="dark"] .line:nth-child(6)::after { background: linear-gradient(to bottom, transparent 0%, #20B2AA 75%, #20B2AA 100%); animation-delay: 3s; }
+[data-theme="dark"] .line:nth-child(7)::after { background: linear-gradient(to bottom, transparent 0%, #DC143C 75%, #DC143C 100%); animation-delay: 3.5s; }
+[data-theme="dark"] .line:nth-child(8)::after { background: linear-gradient(to bottom, transparent 0%, #00FA9A 75%, #00FA9A 100%); animation-delay: 4s; }
+[data-theme="dark"] .line:nth-child(9)::after { background: linear-gradient(to bottom, transparent 0%, #FF1493 75%, #FF1493 100%); animation-delay: 4.5s; }
+[data-theme="dark"] .line:nth-child(10)::after { background: linear-gradient(to bottom, transparent 0%, #00BFFF 75%, #00BFFF 100%); animation-delay: 5s; }
+
+@keyframes drop {
+  0% { top: -50%; }
+  100% { top: 110%; }
+}
+
+/* 🔥 Fireflies overlay */
 .falling-stars .firefly {
   position: absolute;
   width: 0.5vw;
@@ -93,6 +133,74 @@ html, body {
   0%, 100% { opacity: 0.3; box-shadow: 0 0 0px 0px yellow; }
   60% { opacity: 1; box-shadow: 0 0 6px 1.2px yellow; }
 }
+
+/* ========================= CONTAINER STRUCTURE ========================= */
+.app-container { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  width: 245px;
+  min-width: 245px;
+  background: var(--card-bg);
+  padding: 32px 24px;
+  box-shadow: 2px 0 5px var(--shadow-color);
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 10;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.sidebar h3 { font-family: 'Poppins', sans-serif; color: var(--accent-color); margin-bottom: 20px; }
+.sidebar nav { display: flex; flex-direction: column; gap: 10px; }
+
+/* 🔹 Unified styles for links & buttons */
+.sidebar a, .sidebar button {
+  color: var(--text-color); padding: 10px; border-radius: 6px;
+  text-decoration: none; transition: background 0.25s, color 0.25s;
+  border: none; background: none; text-align: left; cursor: pointer;
+  font-size: 1rem; display: block; width: 100%;
+}
+.sidebar a:hover, .sidebar button:hover, .sidebar .active, .nav-link.active {
+  background-color: var(--accent-color); color: white;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  margin-top: 20px; background: var(--accent-color);
+  border: none; border-radius: 50%; width: 44px; height: 44px;
+  font-size: 1.6rem; color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.22s, transform 0.15s;
+  box-shadow: 0 2px 8px 0 #0001;
+}
+.theme-toggle:hover, .theme-toggle:focus {
+  background: #1742a1; outline: none; transform: scale(1.09);
+}
+
+/* Main content */
+.main-content {
+  margin-left: 245px; padding: 60px 40px;
+  flex-grow: 1; position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* ==== Section Container ==== */
+section {
+  width: 100%; max-width: 960px; background: var(--card-bg);
+  padding: 42px 36px; margin-bottom: 40px; border-radius: 20px;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  position: relative; z-index: 3;
+}
+section h2 {
+  font-size: 2rem; font-family: 'Poppins', sans-serif;
+  color: var(--accent-color); border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 8px; margin-bottom: 24px;
+}
+
+/* ==== Personal Info Card, Projects, Skills, Certifications, etc... ==== */
+/* KEEP your existing styles below without changes */
+
+
 
 /* ========================= CONTAINER STRUCTURE ========================= */
 .app-container {
@@ -126,15 +234,28 @@ html, body {
   flex-direction: column;
   gap: 10px;
 }
-.sidebar a {
+
+/* 🔹 Unified styles for links & buttons */
+.sidebar a,
+.sidebar button {
   color: var(--text-color);
   padding: 10px;
   border-radius: 6px;
   text-decoration: none;
-  transition: background 0.25s;
+  transition: background 0.25s, color 0.25s;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  display: block;
+  width: 100%;
 }
+
 .sidebar a:hover,
-.sidebar .active {
+.sidebar button:hover,
+.sidebar .active,
+.nav-link.active {
   background-color: var(--accent-color);
   color: white;
 }
@@ -160,8 +281,10 @@ html, body {
 .theme-toggle:focus {
   background: #1742a1;
   outline: none;
-  transform: scale(1.09) rotate(-8deg);
+  transform: scale(1.09); /* 🔹 removed rotate(-8deg) */
 }
+
+
 
 /* Main content */
 .main-content {
@@ -196,7 +319,7 @@ section h2 {
   margin-bottom: 24px;
 }
 
-/* ==== Personal Info card (lighter in dark mode) ==== */
+/* ==== Personal Info card ==== */
 .personal-info-card {
   display: flex;
   gap: 30px;
@@ -218,18 +341,42 @@ section h2 {
   box-shadow: 0 9px 32px rgba(40, 60, 117, 0.13);
 }
 .profile-image img {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  border: 3px solid var(--accent-color);
+  width: 150px;
+  height: 200px;
+  border-radius: 4px;
+  border: 2px solid var(--accent-color);
   object-fit: cover;
 }
-.info-content h1 {
-  font-family: 'Poppins', sans-serif;
-  color: var(--accent-color);
-  margin-bottom: 10px;
-  font-size: 2rem;
+.neon-text {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 5px #ff005e, 
+               0 0 10px #ff005e, 
+               0 0 20px #ff005e, 
+               0 0 40px #ff005e, 
+               0 0 80px #ff005e;
+  animation: glow 1.5s infinite alternate;
+  line-height: 1.2;
 }
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #ff005e, 
+                 0 0 10px #ff005e, 
+                 0 0 20px #ff005e, 
+                 0 0 40px #ff005e, 
+                 0 0 80px #ff005e;
+  }
+  100% {
+    text-shadow: 0 0 10px #00d4ff, 
+                 0 0 20px #00d4ff, 
+                 0 0 40px #00d4ff, 
+                 0 0 80px #00d4ff, 
+                 0 0 160px #00d4ff;
+  }
+}
+
 .contact-item {
   display: flex;
   align-items: center;
@@ -257,7 +404,7 @@ section h2 {
   color: var(--text-color);
 }
 
-/* ==== Projects, Skills, Interests, Certifications Unified List ==== */
+/* ==== Projects, Skills, Interests, Certifications ==== */
 .projects-section,
 .skills-section,
 .certifications-section,
@@ -469,5 +616,128 @@ section h2 {
   .profile-image img {
     width: 108px;
     height: 108px;
+  }
+}
+/* ========================= SKILLS SECTION ========================= */
+/* ========================= SKILLS SECTION ========================= */
+.skills-section {
+  width: 100%;
+  max-width: 960px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  padding: 42px 36px;
+  margin-bottom: 40px;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.skill-item {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 4px 16px var(--shadow-color);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.skill-item:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.25);
+}
+
+/* Header with category image */
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.skill-category-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* Skill category text */
+.skill-category {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--accent-color);
+}
+
+/* Details list */
+.skill-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-detail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.4;
+}
+
+.skill-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+/* ==================== */
+/* Bubble Background CSS*/
+/* ==================== */
+.bubbles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1; /* Keep behind content */
+}
+
+.bubble {
+  position: absolute;
+  bottom: -150px;
+  background: rgba(173, 216, 230, 0.3);
+  border-radius: 50%;
+  animation: float-up linear infinite, sway 6s ease-in-out infinite alternate;
+}
+
+/* Floating upward */
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+/* Sideways sway */
+@keyframes sway {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(40px);
   }
 }
