@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkportfolio=self.webpackChunkportfolio||[]).push([[702],{702:(s,e,i)=>{i.r(e),i.d(e,{default:()=>n});i(43);var l=i(579);const n=()=>(0,l.jsxs)("section",{className:"interests-section",children:[(0,l.jsx)("h2",{children:"Personal Interests"}),(0,l.jsx)("ul",{className:"interests-list",children:["Playing Cricket","Chess","Trying new Cuisines","Travelling"].map(((s,e)=>(0,l.jsx)("li",{className:"interest-item",children:s},e)))})]})}}]);
-//# sourceMappingURL=702.788434cc.chunk.js.map
